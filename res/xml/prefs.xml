@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory
+			android:title="@string/categorySearch">
+			<ListPreference
+	                android:key="search_limit"
+	                android:title="@string/title_search_limit"
+	                android:summary="@string/summary_search_limit"
+	                android:entries="@array/entries_search_limit"
+	                android:entryValues="@array/entryvalues_search_limit"
+	                android:dialogTitle="@string/dialog_title_search_limit"
+	                android:defaultValue="200" />
+	</PreferenceCategory>
+	<PreferenceCategory
+			android:title="@string/categoryAbout">
+			<Preference 
+					android:key="about_prefs"
+	                android:title="@string/titleAbout"
+	                android:summary="@string/summaryAbout" />
+	</PreferenceCategory>
+</PreferenceScreen>

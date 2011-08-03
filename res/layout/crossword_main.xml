@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+	<TextView  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/titleCrossword" 
+	    android:textSize="25dp" 
+	    android:textColor="#B39000"/>
+	<LinearLayout
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent">
+		<TextView 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" 
+			android:text="@string/txtSearch" 
+			android:textSize="20dp" 
+			android:layout_marginRight="10dp"/>
+		<EditText 
+			android:layout_height="wrap_content" 
+			android:id="@+id/editTextClue" 
+			android:layout_width="fill_parent"
+			android:singleLine="true" android:hint="@string/hint_clue"/>
+	</LinearLayout>
+	<Button 
+		android:layout_height="wrap_content" 
+		android:id="@+id/btnSearch" 
+		android:text="@string/btnSearch" 
+		android:layout_width="fill_parent" 
+		android:textSize="20dp"/>
+	<ListView 
+		android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+		android:id="@+id/android:list" />
+</LinearLayout>

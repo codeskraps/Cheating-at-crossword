@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Crossword Activity -->
+    <string name="app_name">Cheating at Crossword</string>
+    <string name="titleCrossword">Cheating at Crossword</string>
+    <string name="txtSearch">Search Clue</string>
+    <string name="hint_clue">Ent#r w#rd</string>
+    <string name="btnSearch">Search</string>
+    
+    <!-- Dialog messages -->
+    <string name="msgDicLoadSuccess">Dictionary Uploaded Successfully</string>
+    <string name="msgDicLoadFail">Dictionary Upload Failed</string>
+    <string name="msgDialogPostingTitle">Cheating at Crossword</string>
+    <string name="msgDialogSearching">Please wait while Searching</string>
+    <string name="msgDialogLoading">Please wait while loading the dictionary for the first time</string>
+    <string name="msgDialogAddWordTitle">Enter a word</string>
+    <string name="msgDialogOk">OK</string>
+    <string name="msgDialogCancel">Cancel</string>
+    
+    <!--  Menus -->
+    <string name="mnuQuit">Quit</string>
+    <string name="mnuPref">Preferences</string>
+    <string name="mnuAdd_word">Add Word</string>
+    
+    <!-- Preference Activity -->
+    <string name="titlePreference">Preferences</string>
+    <string name="categorySearch">Search Settings</string>
+    <string name="title_search_limit">Search Limit</string>
+    <string name="summary_search_limit"> words will be shown on every search</string>
+    <string name="dialog_title_search_limit">Search Limit</string>
+    <string name="categoryAbout">About</string>
+    <string name="titleAbout">Cheating at Crossword 1.0</string>
+    <string name="summaryAbout">by Carles Sentis</string>
+    
+    <!-- Toast Messages -->
+    <string name="toastWordAddedSuccessfully">Word added successfully</string>
+    <string name="toastWordAddedFailed">Word addition failed</string>
+    <string name="toastWordAddedAlready">The word is already in the dictionary</string>
+    <string name="toastWordAddedCancel">Action Cancelled</string>
+    <string name="toastWordAddedNotValid">Not a valid word</string>
+</resources>
