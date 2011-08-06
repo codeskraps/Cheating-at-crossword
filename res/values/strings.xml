@@ -37,5 +37,8 @@
     <string name="toastWordAddedFailed">Word addition failed</string>
     <string name="toastWordAddedAlready">The word is already in the dictionary</string>
     <string name="toastWordAddedCancel">Action Cancelled</string>
-    <string name="toastWordAddedNotValid">Not a valid word</string>
+    <string name="toastSearchLimit">Search Limit of </string>
+    <string name="toastSearchLimit2"> reached</string>
+    <string name="toastFound">Found</string>
+    <string name="toastFound2"> words</string>
 </resources>

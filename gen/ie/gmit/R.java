@@ -74,10 +74,13 @@ public final class R {
          */
         public static final int titlePreference=0x7f070010;
         public static final int title_search_limit=0x7f070012;
+        public static final int toastFound=0x7f07001e;
+        public static final int toastFound2=0x7f07001f;
+        public static final int toastSearchLimit=0x7f07001c;
+        public static final int toastSearchLimit2=0x7f07001d;
         public static final int toastWordAddedAlready=0x7f07001a;
         public static final int toastWordAddedCancel=0x7f07001b;
         public static final int toastWordAddedFailed=0x7f070019;
-        public static final int toastWordAddedNotValid=0x7f07001c;
         /**  Toast Messages 
          */
         public static final int toastWordAddedSuccessfully=0x7f070018;

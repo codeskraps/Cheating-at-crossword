@@ -2,15 +2,16 @@ package ie.gmit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +20,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 public class CrosswordActivity extends ListActivity implements OnClickListener {
 	private static final String TAG = CrosswordActivity.class.getSimpleName();
 	
-	private CrosswordApplication crossword = null;
-
 	private EditText txtWordClue = null;
 	private Button btnSearch = null;
 	private DictionaryData dictionary = null;
@@ -36,6 +37,8 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 	private static final String ITEM_KEY = "key";
 	private ArrayList<HashMap<String, String>> foundList = new ArrayList<HashMap<String, String>>();
 	private SimpleAdapter adapter;
+	
+	private Integer total;
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,9 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 
 		txtWordClue = (EditText) findViewById(R.id.editTextClue);
 		btnSearch = (Button) findViewById(R.id.btnSearch);
-
+		
 		btnSearch.setOnClickListener(this);
+		txtWordClue.addTextChangedListener(new CustomTextWatcher()); 
 		
 		adapter = new SimpleAdapter(this, foundList, R.layout.row,
 									new String[] { ITEM_KEY }, new int[] { R.id.txtRow });
@@ -61,34 +65,15 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// we get the entered word
-		int hashcount = 0;
 		String wordClue = txtWordClue.getText().toString();
 		Log.d(TAG, "Entered word: " + wordClue);
 		
-		// count how many hashses entered
-		char[] arWordClue = wordClue.toCharArray();
-		for (int x = 0; x < arWordClue.length; x++) {
-			if (wordClue.indexOf('#') != -1)
-				hashcount++;
-		}
-		// Too many hashes we ran out of memory (to many possibilities)
-		// and the player doesn't have a clue about crossword
-		// too bad for him... :-P
-		if (hashcount <= 5) {
-			// we check that there isn't any blanks
-			if (wordClue.indexOf(' ') == -1) {
-				foundList.clear();
-				adapter.notifyDataSetChanged();
-				
-				// We set up a new arraylist and pass it to the thread
-				ArrayList<String> lstSearch = new ArrayList<String>();
-				new SearchingDictionary().execute(lstSearch);
-			}else {
-				Toast.makeText(this, "Not a valid clue", Toast.LENGTH_SHORT).show();
-			}
-		}else {
-			Toast.makeText(this, "Too many hashes", Toast.LENGTH_SHORT).show();
-		}
+		foundList.clear();
+		adapter.notifyDataSetChanged();
+		
+		// We set up a new arraylist and pass it to the thread
+		ArrayList<String> lstSearch = new ArrayList<String>();
+		new SearchingDictionary().execute(lstSearch);
 	}
 	
 	private class SearchingDictionary extends AsyncTask<ArrayList<String>, Integer, String>{
@@ -98,53 +83,31 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 			super.onPreExecute();
 
 			// We show a dialog to wait
-	        dialog = new ProgressDialog(CrosswordActivity.this);
-			dialog.setTitle(getString(R.string.msgDialogPostingTitle));
-			dialog.setMessage(getString(R.string.msgDialogSearching));
-			dialog.setIndeterminate(true);
-			dialog.setCancelable(true);
-	        dialog.show();
+//	        dialog = new ProgressDialog(CrosswordActivity.this);
+//			dialog.setTitle(getString(R.string.msgDialogPostingTitle));
+//			dialog.setMessage(getString(R.string.msgDialogSearching));
+//			dialog.setIndeterminate(true);
+//			dialog.setCancelable(true);
+//	        dialog.show();
 	    }
 		
 		@Override
 		protected String doInBackground(ArrayList<String>... passing) {
-			int total = 0;
-			
+			total = 0;
 			// We get Preferences and passed values
-			crossword = (CrosswordApplication) getApplication();
-			dictionary = crossword.getDictionary();
-			crossPrefs = crossword.getCrosswordPreferences();
+			dictionary = ((CrosswordApplication) getApplication()).getDictionary();
+			crossPrefs = ((CrosswordApplication) getApplication()).getCrosswordPreferences();
 			ArrayList<String> lstSearch = passing[0];
+			
 			
 			// Get entered word and convert it to an array
 			String wordClue = new String(txtWordClue.getText().toString().toLowerCase());
-			char[] arWordClue = wordClue.toCharArray();
 			
-			// Call the Method
-			//addToSearchList(arWordClue, 0, lstSearch);
-			
-			Map<Integer, String> mapDictionary = dictionary.getWordMap();
-		        
-			for (int y = 0; y < lstSearch.size(); y++){
-				if (mapDictionary.containsKey(lstSearch.get(y))) {
-					String foundWord = mapDictionary.get(lstSearch.get(y));
-					//Log.d(TAG, "Found word " + lstSearch.get(y));
-					try {
-						HashMap<Integer, String> item = new HashMap<Integer, String>();
-						item.put(ITEM_KEY, foundWord);
-						foundList.add(item);
-						total++;
-						if (total == crossPrefs.getSearchLimit()){
-							break;
-						}
-					} catch (NullPointerException e) {
-						Log.d(TAG, "Tried to add null value");
-					}
-				} else {
-					//Log.d(TAG, "Not Found word " + lstSearch.get(y));
-				}
-			}
-			
+			ArrayList<WordItem> wordItemList = dictionary.getKeyWordItemList(wordClue.length());
+			if (wordItemList != null) {
+
+				addToSearchList(wordClue, wordItemList);
+		    }
 			Log.d(TAG, "Finished Searching. Found " + Integer.toString(total));
 			
 			return Integer.toString(total);
@@ -153,24 +116,56 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
+			String toast;
 			
-			dialog.dismiss();
-			
+			//dialog.dismiss();
+			Log.d(TAG, "here2");
 			adapter.notifyDataSetChanged();
-			if (Integer.parseInt(result) == crossPrefs.getSearchLimit()){
-				Toast.makeText(CrosswordActivity.this, "Search Limit of " + result + " reached", Toast.LENGTH_LONG).show();
-			}else{
-				Toast.makeText(CrosswordActivity.this, "Found " + result + " words", Toast.LENGTH_LONG).show();
-			}
+			Log.d(TAG, "here3");
+//			if (Integer.parseInt(result) == crossPrefs.getSearchLimit()){
+//				toast = getString(R.string.toastSearchLimit) + result + getString(R.string.toastSearchLimit2);
+//				
+//			}else{
+//				toast = getString(R.string.toastFound )+ result + getString(R.string.toastFound2);
+//			}
+			Toast.makeText(CrosswordActivity.this, "found " + result, Toast.LENGTH_LONG).show();
 		}
 	}
 	
-//	public void addToSearchList (char[] arWordClue, int i, List<String> lstSearch){	
-//		// We basically swap # for a to z if we find more # we call this method again to do the same
-//		// we call this method as many times as needed depending on how many # there are and swap them
-//		// a to z char. This creates all the different possibilities...
+	public void addToSearchList (String wordClue, ArrayList<WordItem> wordItemList){
+		char[] arWordClue = wordClue.toCharArray();
+		int quest = wordClue.indexOf('?');
+		
+    	if (quest != -1) {
+    		for (int aToz = 97; aToz <= 122; aToz++){
+				arWordClue[quest] = (char) aToz;
+				String newWord = new String (arWordClue);
+				if (newWord.indexOf('?') == -1){
+					for (WordItem w : wordItemList) {
+						if (w.getSearchWord().equals(newWord)) {
+							Log.d(TAG, "Found: " + w.getDisplayWord());
+							try {
+								HashMap<String, String> item = new HashMap<String, String>();
+								item.put(ITEM_KEY, w.getDisplayWord());
+								foundList.add(item);
+							} catch (NullPointerException e) {
+								Log.d(TAG, "null pointer error");
+							}
+							total++;
+							Log.d(TAG, "added to list");
+						}
+					}
+				} else {
+					Log.d(TAG, "addtosearch: " + newWord);
+					addToSearchList(newWord, wordItemList);
+				}	
+					
+				Log.d(TAG, "newword: " + newWord + " indexOf " + newWord.indexOf('?'));
+			}
+    	}	
+	}
 //		for (int y = i; y < arWordClue.length; y++){
-//			if (arWordClue[y] == '#'){
+//			if (arWordClue[y] == '?'){
 //				for (int z = 97; z <= 122; z++){
 //					arWordClue[y] = (char) z;
 //					String newWord = new String (arWordClue);
@@ -183,7 +178,6 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 //				arWordClue[y] = (char) 35;
 //			}
 //		}
-//	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -205,18 +199,18 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 			break;
 		case R.id.mnuQuit:
 			// We end ... :-(
-			finish();
+			moveTaskToBack(true);
 			break;
 		}
 		return true;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		
 		// We get word pressed from the adapter
+		@SuppressWarnings("unchecked")
 		HashMap<Integer, String> item = (HashMap<Integer, String>) adapter.getItem(position);
 		String newSelectedWord = (String) item.get(ITEM_KEY);
 		

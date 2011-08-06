@@ -25,8 +25,9 @@ public class WebDefinition extends Activity{
 		setContentView(webview);
 		
 		// we open a dictionary web page of the selected word
-		Log.d(TAG, "Loading: http://dictionary.reference.com/browse/" + crossPrefs.getSelectedWord());
-		webview.loadUrl("http://dictionary.reference.com/browse/" + crossPrefs.getSelectedWord());
+		// Log.d(TAG, "Loading: http://dictionary.reference.com/browse/" + crossPrefs.getSelectedWord());
+		//webview.loadUrl("http://dictionary.reference.com/browse/" + crossPrefs.getSelectedWord());
+		webview.loadUrl("http://ca.wiktionary.org/wiki/" + crossPrefs.getSelectedWord());
 }
 
 	@Override

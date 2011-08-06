@@ -1,5 +1,7 @@
 package ie.gmit;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
@@ -51,22 +53,23 @@ public class DialogAddWord extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				int wordAdded;
+				int wordAdded = 0;
 				
 				// We get the word entered and check it for different things
 				String newWord = editAddWord.getText().toString().toLowerCase();
     			if ((!newWord.equals("")) && (newWord.indexOf(' ') == -1)){
-    				Map<Integer, String> mapDictionary = dictionary.getWordMap();
-    				if (!mapDictionary.containsValue(newWord)) {
-    					try {
-							dictionary.addWord(newWord);
-							wordAdded = ADDED_SUCCESS;
-						} catch (Exception e) {
-							e.printStackTrace();
-							wordAdded = ADDED_FAILED;
-						}
-    				}else{
-    					wordAdded = ADDED_ALREADY;
+    				ArrayList<WordItem> wordItemList = dictionary.getKeyWordItemList(newWord.length());
+    				if (wordItemList != null) {
+	    					try {
+								dictionary.addWord(newWord);
+								wordAdded = ADDED_SUCCESS;
+							} catch (Exception e) {
+								e.printStackTrace();
+								wordAdded = ADDED_FAILED;
+							}
+	    				
+	    					wordAdded = ADDED_ALREADY;
+	    				
     				}
     			}else{
     				wordAdded = ADDED_NOTVALID;
@@ -104,7 +107,7 @@ public class DialogAddWord extends Activity {
 			Toast.makeText(this, R.string.toastWordAddedCancel, Toast.LENGTH_LONG).show();
 			break;
 		case ADDED_NOTVALID:
-			Toast.makeText(this, R.string.toastWordAddedNotValid, Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "not valide", Toast.LENGTH_LONG).show();
 
 		}
 		finish();
