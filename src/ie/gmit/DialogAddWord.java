@@ -25,7 +25,7 @@ public class DialogAddWord extends Activity {
 	private EditText editAddWord = null;
 	private Button btnAddOk = null;
 	private Button btnAddCancel = null;
-	private Dictionary dictionary = null;
+	private DictionaryData dictionary = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class DialogAddWord extends Activity {
 				// We get the word entered and check it for different things
 				String newWord = editAddWord.getText().toString().toLowerCase();
     			if ((!newWord.equals("")) && (newWord.indexOf(' ') == -1)){
-    				Map<String, String> mapDictionary = dictionary.getWordMap();
+    				Map<Integer, String> mapDictionary = dictionary.getWordMap();
     				if (!mapDictionary.containsValue(newWord)) {
     					try {
 							dictionary.addWord(newWord);

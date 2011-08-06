@@ -11,19 +11,16 @@ import android.widget.Toast;
 public class CrosswordApplication extends Application implements OnSharedPreferenceChangeListener {
 	private static String TAG = CrosswordApplication.class.getSimpleName();
 	
-	// Main variables of the whole application
-	private Dictionary dictionary = null;
+	private DictionaryData dictionary = null;
 	private SharedPreferences prefs = null;
 	private CrosswordPreferences crossPrefs = null;
 	
-//	private ProgressDialog dialog = null;
-
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		Log.d(TAG, "CrosswordApplication onCreate");
 
-		dictionary = new Dictionary(this);
+		dictionary = new DictionaryData(this);
 		crossPrefs = new CrosswordPreferences();
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -42,7 +39,7 @@ public class CrosswordApplication extends Application implements OnSharedPrefere
 		//Log.d(TAG, "searchLimit: " + Integer.toString(crossPrefs.getSearchLimit()));
 	}
 	
-	public Dictionary getDictionary() {
+	public DictionaryData getDictionary() {
 		return dictionary;
 	}
 	
@@ -62,16 +59,6 @@ public class CrosswordApplication extends Application implements OnSharedPrefere
 		protected void onPreExecute() {
 			super.onPreExecute();
 			
-			//We can not show dialog in the Application class :-(
-			
-//			dialog = new ProgressDialog(CrosswordActivity.this);
-//			dialog.setTitle(getString(R.string.msgDialogPostingTitle));
-//			dialog.setMessage(getString(R.string.msgDialogLoading));
-//			dialog.setIndeterminate(true);
-//			dialog.setCancelable(true);
-//	        dialog.show();
-			
-			// But we show a toast instead :-)
 			Toast.makeText(CrosswordApplication.this, "Loading the dictionary...", Toast.LENGTH_LONG).show();
 		}
 

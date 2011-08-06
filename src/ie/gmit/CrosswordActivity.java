@@ -28,7 +28,7 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 
 	private EditText txtWordClue = null;
 	private Button btnSearch = null;
-	private Dictionary dictionary = null;
+	private DictionaryData dictionary = null;
 	private ProgressDialog dialog = null;
 	private CrosswordPreferences crossPrefs = null;
 	
@@ -43,27 +43,19 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 
 		setContentView(R.layout.crossword_main);
 		
-		init();
-	}
-
-	public void init() {
 		Log.d(TAG, "initStart'd");
 
-		// Get variables
-		
 		txtWordClue = (EditText) findViewById(R.id.editTextClue);
-
 		btnSearch = (Button) findViewById(R.id.btnSearch);
+
 		btnSearch.setOnClickListener(this);
 		
-		// We set the adapter for the ListActivity
-		this.adapter = new SimpleAdapter(this, foundList, R.layout.row,
-				new String[] { ITEM_KEY }, new int[] { R.id.txtRow });
-		setListAdapter(this.adapter);
+		adapter = new SimpleAdapter(this, foundList, R.layout.row,
+									new String[] { ITEM_KEY }, new int[] { R.id.txtRow });
+		setListAdapter(adapter);
 		
-		// Menus
 		registerForContextMenu(getListView());
-}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -82,7 +74,7 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 		// Too many hashes we ran out of memory (to many possibilities)
 		// and the player doesn't have a clue about crossword
 		// too bad for him... :-P
-		if (hashcount <= 3) {
+		if (hashcount <= 5) {
 			// we check that there isn't any blanks
 			if (wordClue.indexOf(' ') == -1) {
 				foundList.clear();
@@ -129,16 +121,16 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 			char[] arWordClue = wordClue.toCharArray();
 			
 			// Call the Method
-			addToSearchList(arWordClue, 0, lstSearch);
+			//addToSearchList(arWordClue, 0, lstSearch);
 			
-			Map<String, String> mapDictionary = dictionary.getWordMap();
+			Map<Integer, String> mapDictionary = dictionary.getWordMap();
 		        
 			for (int y = 0; y < lstSearch.size(); y++){
 				if (mapDictionary.containsKey(lstSearch.get(y))) {
 					String foundWord = mapDictionary.get(lstSearch.get(y));
 					//Log.d(TAG, "Found word " + lstSearch.get(y));
 					try {
-						HashMap<String, String> item = new HashMap<String, String>();
+						HashMap<Integer, String> item = new HashMap<Integer, String>();
 						item.put(ITEM_KEY, foundWord);
 						foundList.add(item);
 						total++;
@@ -173,25 +165,25 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 		}
 	}
 	
-	public void addToSearchList (char[] arWordClue, int i, List<String> lstSearch){	
-		// We basically swap # for a to z if we find more # we call this method again to do the same
-		// we call this method as many times as needed depending on how many # there are and swap them
-		// a to z char. This creates all the different possibilities...
-		for (int y = i; y < arWordClue.length; y++){
-			if (arWordClue[y] == '#'){
-				for (int z = 97; z <= 122; z++){
-					arWordClue[y] = (char) z;
-					String newWord = new String (arWordClue);
-					if (newWord.indexOf('#') == -1)
-						lstSearch.add(newWord);
-					// Log.d(TAG, "newword: " + newWord + " indexOf " + newWord.indexOf('#'));
-					if (y < arWordClue.length - 1)
-						addToSearchList(arWordClue, y + 1, lstSearch);
-				}
-				arWordClue[y] = (char) 35;
-			}
-		}
-	}
+//	public void addToSearchList (char[] arWordClue, int i, List<String> lstSearch){	
+//		// We basically swap # for a to z if we find more # we call this method again to do the same
+//		// we call this method as many times as needed depending on how many # there are and swap them
+//		// a to z char. This creates all the different possibilities...
+//		for (int y = i; y < arWordClue.length; y++){
+//			if (arWordClue[y] == '#'){
+//				for (int z = 97; z <= 122; z++){
+//					arWordClue[y] = (char) z;
+//					String newWord = new String (arWordClue);
+//					if (newWord.indexOf('#') == -1)
+//						lstSearch.add(newWord);
+//					// Log.d(TAG, "newword: " + newWord + " indexOf " + newWord.indexOf('#'));
+//					if (y < arWordClue.length - 1)
+//						addToSearchList(arWordClue, y + 1, lstSearch);
+//				}
+//				arWordClue[y] = (char) 35;
+//			}
+//		}
+//	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -225,7 +217,7 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 		super.onListItemClick(l, v, position, id);
 		
 		// We get word pressed from the adapter
-		HashMap<String, String> item = (HashMap<String, String>) adapter.getItem(position);
+		HashMap<Integer, String> item = (HashMap<Integer, String>) adapter.getItem(position);
 		String newSelectedWord = (String) item.get(ITEM_KEY);
 		
 		// Save the word in our Preference class and start the webActivity

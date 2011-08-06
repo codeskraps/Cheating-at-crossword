@@ -39,7 +39,8 @@ public final class R {
         public static final int menu=0x7f080000;
     }
     public static final class raw {
-        public static final int dictionary=0x7f050000;
+        public static final int catalan_clean=0x7f050000;
+        public static final int dictionary=0x7f050001;
     }
     public static final class string {
         /**  Crossword Activity 
