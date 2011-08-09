@@ -1,9 +1,5 @@
 package ie.gmit;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,35 +45,35 @@ public class DialogAddWord extends Activity {
 	    editAddWord = (EditText) findViewById(R.id.editAddWord);
 	    btnAddOk = (Button) findViewById(R.id.btnAddOk);
 	    btnAddCancel = (Button) findViewById(R.id.btnAddCancel);
-	    btnAddOk.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				int wordAdded = 0;
-				
-				// We get the word entered and check it for different things
-				String newWord = editAddWord.getText().toString().toLowerCase();
-    			if ((!newWord.equals("")) && (newWord.indexOf(' ') == -1)){
-    				ArrayList<WordItem> wordItemList = dictionary.getKeyWordItemList(newWord.length());
-    				if (wordItemList != null) {
-	    					try {
-								dictionary.addWord(newWord);
-								wordAdded = ADDED_SUCCESS;
-							} catch (Exception e) {
-								e.printStackTrace();
-								wordAdded = ADDED_FAILED;
-							}
-	    				
-	    					wordAdded = ADDED_ALREADY;
-	    				
-    				}
-    			}else{
-    				wordAdded = ADDED_NOTVALID;
-    			}
-    			// We send it to the onStop() method
-				onStop(wordAdded);
-			}
-		});
+//	    btnAddOk.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+////				int wordAdded = 0;
+////				
+////				// We get the word entered and check it for different things
+////				String newWord = editAddWord.getText().toString().toLowerCase();
+////    			if ((!newWord.equals("")) && (newWord.indexOf(' ') == -1)){
+////    				ArrayList<WordItem> wordItemList = dictionary.getKeyWordItemList(newWord.length());
+////    				if (wordItemList != null) {
+////	    					try {
+////								dictionary.addWord(newWord);
+////								wordAdded = ADDED_SUCCESS;
+////							} catch (Exception e) {
+////								e.printStackTrace();
+////								wordAdded = ADDED_FAILED;
+////							}
+////	    				
+////	    					wordAdded = ADDED_ALREADY;
+////	    				
+////    				}
+////    			}else{
+////    				wordAdded = ADDED_NOTVALID;
+////    			}
+////    			// We send it to the onStop() method
+////				onStop(wordAdded);
+////			}
+//		});
 	    
 	    btnAddCancel.setOnClickListener(new View.OnClickListener() {
 			

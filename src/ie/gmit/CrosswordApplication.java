@@ -1,5 +1,8 @@
 package ie.gmit;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -27,7 +30,8 @@ public class CrosswordApplication extends Application implements OnSharedPrefere
 		prefs.registerOnSharedPreferenceChangeListener(this);
 		
 		// We load the dictionay in the application class so that we only loaded once
-		new LoadDictionary().execute((String) null);
+		Log.d(TAG,"Loading started: " + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+		//new LoadDictionary().execute((String) null);
 	}
 
 	@Override
@@ -53,39 +57,40 @@ public class CrosswordApplication extends Application implements OnSharedPrefere
 		return crossPrefs;
 	}
 	
-	private class LoadDictionary extends AsyncTask<String, Integer, String>{
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			
-			Toast.makeText(CrosswordApplication.this, "Loading the dictionary...", Toast.LENGTH_LONG).show();
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-			String result;
-			
-			try {
-				// We load the dictionary
-				dictionary.load();
-				result = getString(R.string.msgDicLoadSuccess);
-			} catch (Exception e) {
-				Log.d(TAG, "[ERROR] Encountered a problem reading the dictionary. "
-						+ e);
-				result = getString(R.string.msgDicLoadFail);
-			}
-			return result;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			
-//			dialog.dismiss();
-			
-			// End the thread showing a Toast
-			Toast.makeText(CrosswordApplication.this, result, Toast.LENGTH_LONG).show();
-		}
-	}
+//	private class LoadDictionary extends AsyncTask<String, Integer, String>{
+//
+//		@Override
+//		protected void onPreExecute() {
+//			super.onPreExecute();
+//			
+//			Toast.makeText(CrosswordApplication.this, "Loading the dictionary...", Toast.LENGTH_LONG).show();
+//		}
+//
+//		@Override
+//		protected String doInBackground(String... params) {
+//			String result;
+//			
+//			try {
+//				// We load the dictionary
+//				dictionary.load();
+//				result = getString(R.string.msgDicLoadSuccess);
+//			} catch (Exception e) {
+//				Log.d(TAG, "[ERROR] Encountered a problem reading the dictionary. "
+//						+ e);
+//				result = getString(R.string.msgDicLoadFail);
+//			}
+//			return result;
+//		}
+//
+//		@Override
+//		protected void onPostExecute(String result) {
+//			super.onPostExecute(result);
+//			
+////			dialog.dismiss();
+//			
+//			// End the thread showing a Toast
+//			Toast.makeText(CrosswordApplication.this, result, Toast.LENGTH_LONG).show();
+//			Log.d(TAG,"Loading ended: " + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+//		}
+//	}
 }

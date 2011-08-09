@@ -9,8 +9,26 @@ package ie.gmit;
 
 public final class R {
     public static final class array {
-        public static final int entries_search_limit=0x7f060000;
-        public static final int entryvalues_search_limit=0x7f060001;
+        public static final int dic_cat_10=0x7f05000a;
+        public static final int dic_cat_11=0x7f05000b;
+        public static final int dic_cat_12=0x7f05000c;
+        public static final int dic_cat_13=0x7f05000d;
+        public static final int dic_cat_14=0x7f05000e;
+        public static final int dic_cat_15=0x7f05000f;
+        public static final int dic_cat_16=0x7f050010;
+        public static final int dic_cat_17=0x7f050011;
+        public static final int dic_cat_18=0x7f050012;
+        public static final int dic_cat_2=0x7f050002;
+        public static final int dic_cat_21=0x7f050013;
+        public static final int dic_cat_3=0x7f050003;
+        public static final int dic_cat_4=0x7f050004;
+        public static final int dic_cat_5=0x7f050005;
+        public static final int dic_cat_6=0x7f050006;
+        public static final int dic_cat_7=0x7f050007;
+        public static final int dic_cat_8=0x7f050008;
+        public static final int dic_cat_9=0x7f050009;
+        public static final int entries_search_limit=0x7f050000;
+        public static final int entryvalues_search_limit=0x7f050001;
     }
     public static final class attr {
     }
@@ -18,16 +36,16 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int btnAddCancel=0x7f090004;
-        public static final int btnAddOk=0x7f090003;
-        public static final int btnSearch=0x7f090001;
-        public static final int editAddWord=0x7f090002;
-        public static final int editTextClue=0x7f090000;
-        public static final int mnuAdd_word=0x7f090007;
-        public static final int mnuPref=0x7f090008;
-        public static final int mnuQuit=0x7f090009;
-        public static final int txtRow=0x7f090005;
-        public static final int wv=0x7f090006;
+        public static final int btnAddCancel=0x7f080004;
+        public static final int btnAddOk=0x7f080003;
+        public static final int btnSearch=0x7f080001;
+        public static final int editAddWord=0x7f080002;
+        public static final int editTextClue=0x7f080000;
+        public static final int mnuAdd_word=0x7f080007;
+        public static final int mnuPref=0x7f080008;
+        public static final int mnuQuit=0x7f080009;
+        public static final int txtRow=0x7f080005;
+        public static final int wv=0x7f080006;
     }
     public static final class layout {
         public static final int crossword_main=0x7f030000;
@@ -36,55 +54,51 @@ public final class R {
         public static final int webview=0x7f030003;
     }
     public static final class menu {
-        public static final int menu=0x7f080000;
-    }
-    public static final class raw {
-        public static final int catalan_clean=0x7f050000;
-        public static final int dictionary=0x7f050001;
+        public static final int menu=0x7f070000;
     }
     public static final class string {
         /**  Crossword Activity 
          */
-        public static final int app_name=0x7f070000;
-        public static final int btnSearch=0x7f070004;
-        public static final int categoryAbout=0x7f070015;
-        public static final int categorySearch=0x7f070011;
-        public static final int dialog_title_search_limit=0x7f070014;
-        public static final int hint_clue=0x7f070003;
-        public static final int mnuAdd_word=0x7f07000f;
-        public static final int mnuPref=0x7f07000e;
+        public static final int app_name=0x7f060000;
+        public static final int btnSearch=0x7f060004;
+        public static final int categoryAbout=0x7f060015;
+        public static final int categorySearch=0x7f060011;
+        public static final int dialog_title_search_limit=0x7f060014;
+        public static final int hint_clue=0x7f060003;
+        public static final int mnuAdd_word=0x7f06000f;
+        public static final int mnuPref=0x7f06000e;
         /**   Menus 
          */
-        public static final int mnuQuit=0x7f07000d;
-        public static final int msgDialogAddWordTitle=0x7f07000a;
-        public static final int msgDialogCancel=0x7f07000c;
-        public static final int msgDialogLoading=0x7f070009;
-        public static final int msgDialogOk=0x7f07000b;
-        public static final int msgDialogPostingTitle=0x7f070007;
-        public static final int msgDialogSearching=0x7f070008;
-        public static final int msgDicLoadFail=0x7f070006;
+        public static final int mnuQuit=0x7f06000d;
+        public static final int msgDialogAddWordTitle=0x7f06000a;
+        public static final int msgDialogCancel=0x7f06000c;
+        public static final int msgDialogLoading=0x7f060009;
+        public static final int msgDialogOk=0x7f06000b;
+        public static final int msgDialogPostingTitle=0x7f060007;
+        public static final int msgDialogSearching=0x7f060008;
+        public static final int msgDicLoadFail=0x7f060006;
         /**  Dialog messages 
          */
-        public static final int msgDicLoadSuccess=0x7f070005;
-        public static final int summaryAbout=0x7f070017;
-        public static final int summary_search_limit=0x7f070013;
-        public static final int titleAbout=0x7f070016;
-        public static final int titleCrossword=0x7f070001;
+        public static final int msgDicLoadSuccess=0x7f060005;
+        public static final int summaryAbout=0x7f060017;
+        public static final int summary_search_limit=0x7f060013;
+        public static final int titleAbout=0x7f060016;
+        public static final int titleCrossword=0x7f060001;
         /**  Preference Activity 
          */
-        public static final int titlePreference=0x7f070010;
-        public static final int title_search_limit=0x7f070012;
-        public static final int toastFound=0x7f07001e;
-        public static final int toastFound2=0x7f07001f;
-        public static final int toastSearchLimit=0x7f07001c;
-        public static final int toastSearchLimit2=0x7f07001d;
-        public static final int toastWordAddedAlready=0x7f07001a;
-        public static final int toastWordAddedCancel=0x7f07001b;
-        public static final int toastWordAddedFailed=0x7f070019;
+        public static final int titlePreference=0x7f060010;
+        public static final int title_search_limit=0x7f060012;
+        public static final int toastFound=0x7f06001e;
+        public static final int toastFound2=0x7f06001f;
+        public static final int toastSearchLimit=0x7f06001c;
+        public static final int toastSearchLimit2=0x7f06001d;
+        public static final int toastWordAddedAlready=0x7f06001a;
+        public static final int toastWordAddedCancel=0x7f06001b;
+        public static final int toastWordAddedFailed=0x7f060019;
         /**  Toast Messages 
          */
-        public static final int toastWordAddedSuccessfully=0x7f070018;
-        public static final int txtSearch=0x7f070002;
+        public static final int toastWordAddedSuccessfully=0x7f060018;
+        public static final int txtSearch=0x7f060002;
     }
     public static final class xml {
         public static final int prefs=0x7f040000;

@@ -83,12 +83,12 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 			super.onPreExecute();
 
 			// We show a dialog to wait
-//	        dialog = new ProgressDialog(CrosswordActivity.this);
-//			dialog.setTitle(getString(R.string.msgDialogPostingTitle));
-//			dialog.setMessage(getString(R.string.msgDialogSearching));
-//			dialog.setIndeterminate(true);
-//			dialog.setCancelable(true);
-//	        dialog.show();
+	        dialog = new ProgressDialog(CrosswordActivity.this);
+			dialog.setTitle(getString(R.string.msgDialogPostingTitle));
+			dialog.setMessage(getString(R.string.msgDialogSearching));
+			dialog.setIndeterminate(true);
+			dialog.setCancelable(true);
+	        dialog.show();
 	    }
 		
 		@Override
@@ -103,11 +103,53 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 			// Get entered word and convert it to an array
 			String wordClue = new String(txtWordClue.getText().toString().toLowerCase());
 			
-			ArrayList<WordItem> wordItemList = dictionary.getKeyWordItemList(wordClue.length());
-			if (wordItemList != null) {
-
-				addToSearchList(wordClue, wordItemList);
-		    }
+			int r;
+			switch(wordClue.length()) {
+			case 2: r = R.array.dic_cat_2; break;
+			case 3: r = R.array.dic_cat_3; break;
+			case 4: r = R.array.dic_cat_4; break;
+			case 5: r = R.array.dic_cat_5; break;
+			case 6: r = R.array.dic_cat_6; break;
+			case 7: r = R.array.dic_cat_7; break;
+			case 8: r = R.array.dic_cat_8; break;
+			case 9: r = R.array.dic_cat_9; break;
+			case 10: r = R.array.dic_cat_10; break;
+			case 11: r = R.array.dic_cat_11; break;
+			case 12: r = R.array.dic_cat_12; break;
+			case 13: r = R.array.dic_cat_13; break;
+			case 14: r = R.array.dic_cat_14; break;
+			case 15: r = R.array.dic_cat_15; break;
+			case 16: r = R.array.dic_cat_16; break;
+			case 17: r = R.array.dic_cat_17; break;
+			case 18: r = R.array.dic_cat_18; break;
+			case 21: r = R.array.dic_cat_21; break;
+			default: r = 0;
+			}
+			
+			Log.d(TAG, "about to get resorces:" + r);
+			String[] arr = null;
+			if (r != 0) arr = getResources().getStringArray(r);
+			Log.d (TAG, "Got Resources: " + r);
+			
+			TernarySearchTree tree = new TernarySearchTree(new TernaryTreeNode('a', false));
+			for (String w : arr) {
+				String[] parts = w.split("\\|");
+				tree.insert(parts[1]);
+				Log.d(TAG, "Adding to tree: " + parts[1]);
+			}
+			
+			addToSearchList(wordClue, tree, lstSearch);
+			for (String w : lstSearch) {
+				try {
+					HashMap<String, String> item = new HashMap<String, String>();
+					item.put(ITEM_KEY, w);
+					foundList.add(item);
+				} catch (NullPointerException e) {
+					Log.d(TAG, "null pointer error");
+				}
+			}
+			
+		    
 			Log.d(TAG, "Finished Searching. Found " + Integer.toString(total));
 			
 			return Integer.toString(total);
@@ -118,7 +160,7 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 			super.onPostExecute(result);
 			String toast;
 			
-			//dialog.dismiss();
+			dialog.dismiss();
 			Log.d(TAG, "here2");
 			adapter.notifyDataSetChanged();
 			Log.d(TAG, "here3");
@@ -132,7 +174,7 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 		}
 	}
 	
-	public void addToSearchList (String wordClue, ArrayList<WordItem> wordItemList){
+	public void addToSearchList (String wordClue, TernarySearchTree tree, ArrayList<String> lstSearch){
 		char[] arWordClue = wordClue.toCharArray();
 		int quest = wordClue.indexOf('?');
 		
@@ -141,28 +183,28 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 				arWordClue[quest] = (char) aToz;
 				String newWord = new String (arWordClue);
 				if (newWord.indexOf('?') == -1){
-					for (WordItem w : wordItemList) {
-						if (w.getSearchWord().equals(newWord)) {
-							Log.d(TAG, "Found: " + w.getDisplayWord());
-							try {
-								HashMap<String, String> item = new HashMap<String, String>();
-								item.put(ITEM_KEY, w.getDisplayWord());
-								foundList.add(item);
-							} catch (NullPointerException e) {
-								Log.d(TAG, "null pointer error");
-							}
-							total++;
-							Log.d(TAG, "added to list");
-						}
+					if (tree.containsKey(newWord)) {
+						Log.d(TAG, "Found: " + newWord);
+						lstSearch.add(newWord);
+						total++;
+						Log.d(TAG, "added to list");
 					}
+					
 				} else {
 					Log.d(TAG, "addtosearch: " + newWord);
-					addToSearchList(newWord, wordItemList);
+					addToSearchList(newWord, tree, lstSearch);
 				}	
 					
 				Log.d(TAG, "newword: " + newWord + " indexOf " + newWord.indexOf('?'));
 			}
-    	}	
+    	} else {
+    		if (tree.containsKey(wordClue)) {
+				Log.d(TAG, "Found: " + wordClue);
+				lstSearch.add(wordClue);
+				total++;
+				Log.d(TAG, "added to list");
+			}
+    	}
 	}
 //		for (int y = i; y < arWordClue.length; y++){
 //			if (arWordClue[y] == '?'){

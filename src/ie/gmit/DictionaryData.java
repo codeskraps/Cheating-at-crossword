@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,57 +14,44 @@ public class DictionaryData {
 	private static final String TAG = DictionaryData.class.getSimpleName();
 	
 	private Context context;
-	private static HashMap<Integer, ArrayList<WordItem>> wordMap = null;
+	private TernarySearchTree tree;
 
 	public DictionaryData(Context context) {
 		this.context = context;
-		wordMap = new HashMap<Integer, ArrayList<WordItem>>();
+		setTree(new TernarySearchTree(new TernaryTreeNode('a', false)));
 	}
 
-	public void load() throws Exception {
-		Log.d(TAG, "load Start'd");
-
-		InputStream inputStream = context.getResources().openRawResource(R.raw.catalan_clean);
-		
-		if (inputStream != null) {
-			InputStreamReader inputReader = new InputStreamReader(inputStream, "UTF8");
-			BufferedReader buffReader = new BufferedReader(inputReader);
-			
-			String next = null;
-            
-			try {
-				while ((next = buffReader.readLine()) != null) {
-					addWord(next);
-				}
-				buffReader.close();
-				
-			} catch (IOException e) {
-				throw new Exception(e.getMessage());
-			}
-			inputReader.close();
-		}
-	}
-
-	public ArrayList<WordItem> getKeyWordItemList(Integer key) {
-		if (wordMap.containsKey(key)) {
-    		return wordMap.get(key);
-    	} else {
-    		return null;
-    	}
+	public void setTree (TernarySearchTree tree) {
+		this.tree = tree;
 	}
 	
-	public void addWord (String next){
-		WordItem wordItem = new WordItem(next);
-		ArrayList<WordItem> wordItemList = new ArrayList<WordItem>();
-		
-		if (getKeyWordItemList(wordItem.getSearchWord().length()) != null) {
-    		wordItemList = getKeyWordItemList(wordItem.getSearchWord().length());
-    	} else {
-    		wordItemList = new ArrayList<WordItem>();
-    	}
-		wordItemList.add(wordItem);
-    	wordMap.put(wordItem.getSearchWord().length(), wordItemList);
-    	
-		// Log.d(TAG, "New word, display " + wordItem.getDisplayWord() + ", search: " + wordItem.getSearchWord());
+	public TernarySearchTree getTree () {
+		return tree;
 	}
+	
+//	public void load() throws Exception {
+//		Log.d(TAG, "load Start'd");
+//
+//		InputStream inputStream = context.getResources().openRawResource(R.raw.dictionary);
+//		
+//		if (inputStream != null) {
+//			InputStreamReader inputReader = new InputStreamReader(inputStream, "UTF8");
+//			BufferedReader buffReader = new BufferedReader(inputReader);
+//			
+//			String next = null;
+//            int added = 0;
+//			try {
+//				while ((next = buffReader.readLine()) != null) {
+//					tree.insert(next);
+//					added++;
+//					if(added % 1000 == 0) Log.d(TAG, "Added: " + added + ", at " + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+//				}
+//				buffReader.close();
+//				
+//			} catch (IOException e) {
+//				throw new Exception(e.getMessage());
+//			}
+//			inputReader.close();
+//		}
+//	}
 }
