@@ -9,24 +9,6 @@ package ie.gmit;
 
 public final class R {
     public static final class array {
-        public static final int dic_cat_10=0x7f05000a;
-        public static final int dic_cat_11=0x7f05000b;
-        public static final int dic_cat_12=0x7f05000c;
-        public static final int dic_cat_13=0x7f05000d;
-        public static final int dic_cat_14=0x7f05000e;
-        public static final int dic_cat_15=0x7f05000f;
-        public static final int dic_cat_16=0x7f050010;
-        public static final int dic_cat_17=0x7f050011;
-        public static final int dic_cat_18=0x7f050012;
-        public static final int dic_cat_2=0x7f050002;
-        public static final int dic_cat_21=0x7f050013;
-        public static final int dic_cat_3=0x7f050003;
-        public static final int dic_cat_4=0x7f050004;
-        public static final int dic_cat_5=0x7f050005;
-        public static final int dic_cat_6=0x7f050006;
-        public static final int dic_cat_7=0x7f050007;
-        public static final int dic_cat_8=0x7f050008;
-        public static final int dic_cat_9=0x7f050009;
         public static final int entries_search_limit=0x7f050000;
         public static final int entryvalues_search_limit=0x7f050001;
     }

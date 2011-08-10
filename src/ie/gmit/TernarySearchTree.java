@@ -7,14 +7,6 @@ public class TernarySearchTree {
 	public TernarySearchTree(TernaryTreeNode node) {
 		this.root = node;
 	}
-	
-	public void setRoot (TernaryTreeNode root) {
-		this.root = root;
-	}
-	
-	public TernaryTreeNode getRoot () {
-		return root;
-	}
 
 	private void insert(String key, int pos, TernaryTreeNode node) {
 		char s[] = key.toCharArray();

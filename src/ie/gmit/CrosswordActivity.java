@@ -103,40 +103,11 @@ public class CrosswordActivity extends ListActivity implements OnClickListener {
 			// Get entered word and convert it to an array
 			String wordClue = new String(txtWordClue.getText().toString().toLowerCase());
 			
-			int r;
-			switch(wordClue.length()) {
-			case 2: r = R.array.dic_cat_2; break;
-			case 3: r = R.array.dic_cat_3; break;
-			case 4: r = R.array.dic_cat_4; break;
-			case 5: r = R.array.dic_cat_5; break;
-			case 6: r = R.array.dic_cat_6; break;
-			case 7: r = R.array.dic_cat_7; break;
-			case 8: r = R.array.dic_cat_8; break;
-			case 9: r = R.array.dic_cat_9; break;
-			case 10: r = R.array.dic_cat_10; break;
-			case 11: r = R.array.dic_cat_11; break;
-			case 12: r = R.array.dic_cat_12; break;
-			case 13: r = R.array.dic_cat_13; break;
-			case 14: r = R.array.dic_cat_14; break;
-			case 15: r = R.array.dic_cat_15; break;
-			case 16: r = R.array.dic_cat_16; break;
-			case 17: r = R.array.dic_cat_17; break;
-			case 18: r = R.array.dic_cat_18; break;
-			case 21: r = R.array.dic_cat_21; break;
-			default: r = 0;
-			}
-			
-			Log.d(TAG, "about to get resorces:" + r);
-			String[] arr = null;
-			if (r != 0) arr = getResources().getStringArray(r);
-			Log.d (TAG, "Got Resources: " + r);
-			
-			TernarySearchTree tree = new TernarySearchTree(new TernaryTreeNode('a', false));
-			for (String w : arr) {
-				String[] parts = w.split("\\|");
-				tree.insert(parts[1]);
-				Log.d(TAG, "Adding to tree: " + parts[1]);
-			}
+			Log.d(TAG, "About to get tree " + wordClue.length());
+			TreeBuilder builder = new TreeBuilder();
+			Log.d(TAG, "About to get builder " + wordClue.length());
+			TernarySearchTree tree = builder.getTree(wordClue.length());
+			Log.d(TAG, "Tree Gotten");
 			
 			addToSearchList(wordClue, tree, lstSearch);
 			for (String w : lstSearch) {
