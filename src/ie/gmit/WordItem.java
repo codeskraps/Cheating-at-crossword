@@ -39,10 +39,10 @@ public class WordItem {
             else if (c == 'ú' || c == 'ü')		this.searchWord += 'u';
             //else if (c == 'ç')					newWord += 'c';
             //else if (c == 'ş')					newWord += 's';
-            else if (c == '-' || c == '·')		this.searchWord = this.searchWord;
+            //else if (c == '-' || c == '·')		this.searchWord = this.searchWord;
             else 								this.searchWord += c;
         }	
         
-		Log.d(TAG, "Adding: " + getDisplayWord() + ", " + getSearchWord());
+		Log.d(TAG, "Adding: " + getDisplayWord());
 	}
 }
